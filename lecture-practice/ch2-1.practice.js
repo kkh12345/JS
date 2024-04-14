@@ -37,3 +37,6 @@ console.log(1201 == '120' + 1);
 console.log('abcd' == 'abc' + 'd');
 
 console.log('true' == true);
+
+// 호이스팅 :
+// 함수가 실행되기 전에 안에 있는 변수들을 범위의 최상단에 끌어올리는것
