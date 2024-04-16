@@ -18,6 +18,6 @@ let patientList = [
   { name: 'sfdkjafsd', age: 20 },
 ];
 console.log(patientList);
-console.log('첫번째:', patientList[0]);
-console.log('첫번째 나이:', patientList[0].age);
-console.log('첫번째 나이:', patientList[0]['age']);
+console.log('첫번째:' + patientList[0]);
+console.log('첫번째 나이:' + patientList[0].age);
+console.log('첫번째 나이:' + patientList[0]['age']);

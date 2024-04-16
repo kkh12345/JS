@@ -20,3 +20,17 @@ for (i = 0; 2 * i + 1 <= 100; i++) {
   odd = 2 * i + 1;
   console.log(odd);
 }
+
+//4
+
+let n = 11;
+let num = true;
+
+if (n === 1) {
+  num = false;
+} else {
+  for (i = 2; i < n; i++) {
+    if (n % i === 0) num = false;
+  }
+}
+console.log(num);

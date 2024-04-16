@@ -9,7 +9,7 @@ console.log(fruit[0]);
 
 fruit.pop(); //끝에걸 없애줌
 console.log(fruit);
-fruit.push('fruit');
+fruit.push('fruit'); //데이터 추가
 console.log(fruit);
 
 //아이템 있는지 없는지 확인
