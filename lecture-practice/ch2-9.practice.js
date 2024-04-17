@@ -15,15 +15,15 @@ while (i <= 100) {
 console.log(sum);
 
 //2
-odd = 0;
-for (i = 0; 2 * i + 1 <= 100; i++) {
+let odd = 0;
+for (i = 0; odd <= 100; i++) {
   odd = 2 * i + 1;
   console.log(odd);
 }
 
 //4
 
-let n = 11;
+let n = 12;
 let num = true;
 
 if (n === 1) {
