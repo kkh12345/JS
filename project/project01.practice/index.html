@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <textarea
+      name=""
+      id="user-input"
+      cols="30"
+      rows="10"
+      placeholder="텍스트를 입력하세요"
+    ></textarea>
+    <button id="submit-button" type="submit">submit</button>
+    <script>
+      let textAreaTag = document.getElementById('user-input');
+      let submitButtonTag = document.getElementById('submit-button');
+      if (textAreaTag.value.length !== 0) {
+        submitButtonTag.disabled = false;
+      }
+    </script>
+  </body>
+</html>
