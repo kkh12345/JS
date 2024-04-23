@@ -37,11 +37,11 @@ body {
 }
 .task > div:first-child {
   padding: 10px 0 0 20px;
+  width: 392px;
 }
 
 .task button {
-  padding: 10px 10px;
-  width: 5em;
+  padding: 10px 15px;
   border: none;
   background-color: white;
 }
@@ -57,4 +57,12 @@ body {
 }
 .task button:nth-child(2):hover {
   background-color: rgba(255, 0, 0, 0.242);
+}
+.task-done {
+  text-decoration: line-through;
+  background-color: beige;
+}
+
+.task-tabs div {
+  cursor: pointer;
 }
