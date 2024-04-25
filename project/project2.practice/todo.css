@@ -7,14 +7,14 @@ body {
   justify-content: center;
   align-items: center;
   color: rgba(245, 245, 245, 0.616);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 #big-box {
   background-color: rgba(0, 0, 0, 0.301);
-  width: 50%;
+  width: 70%;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-  height: 98vh;
+  min-height: 98vh;
 }
 
 h1 {
@@ -87,9 +87,15 @@ ul > li {
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  padding: 0 0 0 20px;
 
   background-color: rgba(0, 0, 0, 0.301);
+}
+.task-container > div:first-child {
+  padding-left: 20px;
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .button-area {
@@ -112,7 +118,7 @@ ul > li {
 }
 
 .button-area button:first-child:hover {
-  background-color: rgba(172, 255, 47, 0.176);
+  background-color: rgba(241, 255, 47, 0.176);
 }
 
 .button-area button:last-child {
@@ -123,38 +129,43 @@ ul > li {
   background-color: rgba(255, 0, 0, 0.244);
 }
 
-@media screen and (max-width: 800px) {
-  .task-container {
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 15vh;
-    padding-left: 0;
-  }
-  ul {
-    text-align: center;
-    padding: 30px 0px;
-  }
-  ul > li {
-    padding: 15px;
-  }
-
-  .input-button {
-    padding: 20px 0px;
-  }
-  h1 {
-    padding: 30px 0px;
-  }
-  #big-box {
-    width: 80%;
-  }
+#checked-text {
+  text-decoration: line-through;
+}
+.checked-background {
+  background-color: rgba(255, 166, 0, 0.164);
 }
 
-@media screen and (max-width: 450px) {
-  ul > li {
-    display: block;
-  }
+@media screen and (max-width: 500px) {
   #big-box {
-    width: 80%;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  h1 {
+    padding: 30px 0;
+  }
+
+  .input-button > input {
+    width: 60%;
+  }
+
+  ul {
+    text-align: center;
+    padding: 30px 0;
+  }
+
+  ul > li {
+    padding: 0 15px;
+  }
+
+  .task-container {
+    flex-direction: column;
+    height: 100px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.237);
+  }
+
+  .task-container > div:first-child {
+    padding: 15px 0;
   }
 }

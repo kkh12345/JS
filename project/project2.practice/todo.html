@@ -14,22 +14,17 @@
           id="input-tag"
           type="text"
           placeholder="할 일을 입력하세요"
+          oninput="handleOnInput(this,70)"
+          onkeyup="inputNull()"
         /><button id="plus-button">+</button>
       </div>
       <ul>
-        <li>전체</li>
-        <li>진행중</li>
-        <li>끝남</li>
+        <li id="all">전체</li>
+        <li id="ongoing">진행중</li>
+        <li id="done">끝남</li>
         <li id="underline"></li>
       </ul>
-      <div class="task-box">
-        <div class="task-container" id="task-container">
-          <div>할일</div>
-          <div class="button-area">
-            <button>체크</button> <button>삭제</button>
-          </div>
-        </div>
-      </div>
+      <div class="task-box" id="task-box"></div>
     </div>
     <script src="./todo.js"></script>
   </body>
