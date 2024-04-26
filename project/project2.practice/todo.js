@@ -97,9 +97,10 @@ function check(id) {
 }
 
 function deleteButton(id) {
-  for (i = 0; i < list.length; i++) {
-    if (list[i].id === id) {
-      list.splice(i, 1);
+  for (i = 0; i < userValue.length; i++) {
+    if (userValue[i].id === id) {
+      userValue.splice(i, 1);
+      filterAction(mode); //////////////
     }
   }
   console.log(userValue);
@@ -110,6 +111,10 @@ function deleteButton(id) {
 function filter(event) {
   // console.log(event.target.id);
   mode = event.target.id;
+  filterAction(mode);
+}
+
+function filterAction(mode) {
   sum = [];
   if (mode == 'all') {
     render();
