@@ -7,7 +7,7 @@ console.log(fruit[1]);
 fruit[0] = 'cherry';
 console.log(fruit[0]);
 
-fruit.pop(); //끝에걸 없애줌
+fruit.pop(); //끝에걸 없애줌 반환함
 console.log(fruit);
 fruit.push('fruit'); //데이터 추가
 console.log(fruit);
