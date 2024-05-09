@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Make Alert box</title>
+    <style>
+      .alert-box {
+        background-color: rgb(45, 86, 174);
+        padding: 20px;
+        color: white;
+        border-radius: 5px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="alert-box" id="alert">
+      알림창임
+      <button onclick="document.getElementById('alert').style.display='none'">
+        X
+      </button>
+    </div>
+    <button onclick="document.getElementById('alert').style.display='block'">
+      버튼
+    </button>
+
+    <script></script>
+  </body>
+</html>
+
+<!-- UI 만드는 법을 알려드릴테니 이거 외워가시면 저런 UI는 알아서 다 만들 수 있습니다. 
+
+// 1. HTML CSS 로 미리 UI 디자인을 해놓고 필요하면 평소엔 숨김
+
+// 2. 버튼을 누르거나할 경우 UI를 보여달라고 자바스크립트 코드짬 -->
