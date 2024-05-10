@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jquery</title>
+    <style>
+      .modal-display {
+        /* display: none; */
+        visibility: hidden;
+        opacity: 0;
+        transition: all 1s;
+      }
+      .modal-black {
+        width: 100%;
+        min-height: 100vh;
+        background-color: rgba(0, 0, 0, 0.457);
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .modal-box {
+        width: 400px;
+        height: 200px;
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-sizing: border-box;
+      }
+      .modal-close-button {
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin: 10px;
+      }
+      .show {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="hello">안녕</p>
+    <p class="hello">안녕</p>
+    <p class="hello">안녕</p>
+    <p class="hello">안녕</p>
+    <button class="modal-open-button">모달 창 띄우기</button>
+    <div class="modal-display">
+      <div class="modal-black">
+        <div class="modal-box">
+          <h3>로그인하세요</h3>
+          <button class="modal-close-button">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- 이제 jQuery 설치한 곳 하단에서 jQuery 문법을 사용가능합니다. -->
+    <script src="./7.js"></script>
+  </body>
+</html>
+
+<!-- [ one-way 일방향 애니메이션 만드는 법 ]
+
+1. 시작스타일 만들고 (class로)
+
+2. 최종스타일 만들고 (class로) 
+
+3. 원할 때 최종스타일로 변하라고 JS 코드짭니다
+
+4. 시작스타일에 transition 추가 
+
+A 상태에서 B 상태로만 움직이는 one-way 애니메이션은 다 이렇게 만들면 됩니다.  -->
+
+<!-- 애니메이션 동작 전 스타일과 동작 후 스타일을 class로 각각 만들어두라는 소리입니다. -->
