@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="alert" style="background-color: pink; padding: 10px">
+      <span>5</span>초 이내 구매시 사은품 증정!
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      // setTimeout(function () {
+      // $('.alert').css('visibility', 'hidden');
+      // 자리는 그대로 차지
+      // $('.alert').hide();
+      // 아예 사라짐
+      // }, 5000);
+      // setInterval(function () {
+      //   console.log('실행');
+      // }, 5000);
+      // 시간마다 실행
+
+      //다시볼것
+      let num = 5;
+      let 타이머 = setInterval(function () {
+        console.log('실행');
+        num--;
+        $('span').html(num);
+        if (num == 0) {
+          $('.alert').hide();
+          clearTimeout(타이머);
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
+<!-- 잠깐상식 : 자바스크립트 문법 vs 브라우저 사용법
+
+var let const if function
+
+이런건 자바스크립트 프로그래밍 문법입니다.
+
+document.querySelector()
+
+alert()
+
+setTimeout()
+
+addEventListener()
+
+이런건 웹브라우저 사용법입니다. -->

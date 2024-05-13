@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+    }
+    .slide-container {
+      width: 300vw;
+      /* margin-left: -100vw; */
+      /* transform: translateX(-100vw); */
+      transition: all 1s;
+    }
+    .slide-box {
+      width: 100vw;
+      float: left;
+      text-align: center;
+    }
+    img {
+      width: 100%;
+    }
+  </style>
+  <body>
+    <div style="width: 100%; overflow: hidden">
+      <div class="slide-container">
+        <div class="slide-box">
+          <img
+            src="https://codingapple.com/wp-content/uploads/2022/02/car1.png"
+            alt=""
+          />
+        </div>
+        <div class="slide-box">
+          <img
+            src="https://codingapple.com/wp-content/uploads/2022/02/car2.png"
+            alt=""
+          />
+        </div>
+        <div class="slide-box">
+          <img
+            src="https://codingapple.com/wp-content/uploads/2022/02/car3.png"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <script>
+      function 페이지(이동) {
+        document.querySelectorAll(
+          '.slide-container'
+        )[0].style.transform = `translateX(${이동})`;
+      }
+
+      document
+        .querySelectorAll('.slide-1')[0]
+        .addEventListener('click', function () {
+          document.querySelectorAll('.slide-container')[0].style.transform =
+            'translateX(0)';
+        });
+
+      document
+        .querySelectorAll('.slide-2')[0]
+        .addEventListener('click', function () {
+          document.querySelectorAll('.slide-container')[0].style.transform =
+            'translateX(-100vw)';
+        });
+
+      document
+        .querySelectorAll('.slide-3')[0]
+        .addEventListener('click', function () {
+          document.querySelectorAll('.slide-container')[0].style.transform =
+            'translateX(-200vw)';
+        });
+    </script>
+  </body>
+</html>

@@ -28,6 +28,10 @@
       >
         다크 모드로 보기
       </button>
+
+      <p>태조 이성계가 태어난 년도는?</p>
+      <input type="number" id="answer" />
+      <button id="send-answer">제출</button>
     </div>
 
     <script
@@ -54,8 +58,47 @@
         }
       });
 
-      let age = '28';
-      const Location = '대전';
+      let 예금액 = 10000;
+      let 미래예금액 = 0;
+
+      function 총예금액2년후() {
+        if (예금액 < 50000) {
+          미래예금액 = 예금액 * 1.15 ** 2;
+        } else {
+          미래예금액 = 예금액 * 1.2 ** 1.2;
+        }
+        console.log(Math.round(미래예금액));
+      }
+      총예금액2년후();
+
+      function 마실수있는커피양(처음양) {
+        let r = Infinity;
+        console.log(Math.ceil(처음양 / (1 - 2 / 3)));
+      }
+      마실수있는커피양(Math.floor(360));
+
+      // 값을 입력하고 제출버튼을 누르면
+      // 답이면 '성공'
+      // 틀리면 '실패'
+      // 3번 틀리면 '멍청아'
+
+      let count = 0;
+
+      $('#send-answer').on('click', function () {
+        count++;
+        console.log(count);
+
+        let userValue = $('#answer').val();
+        console.log(userValue);
+        console.log(typeof userValue);
+        if (userValue === '1335') {
+          alert('성공');
+        } else if (count >= 3 && userValue !== '1335') {
+          alert('멍청아');
+        } else {
+          alert('실패');
+        }
+      });
     </script>
   </body>
 </html>
