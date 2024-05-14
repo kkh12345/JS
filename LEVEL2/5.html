@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function 함수() {
+        return 123; //코드실행 끝(함수종료)
+      }
+      console.log(함수());
+
+      function vat(a) {
+        var num = (a * 1.1).toFixed(2); //소수점 2자리까지 반올림 .근데 문자열로 반환됨
+        return parseFloat(num); //parseInt()도있다.
+      }
+      console.log(vat(123.123213));
+
+      // 이렇게 함수() 실행하고 나서 그 자리에 뭔가 결과를 남기고 싶으면 return 문법 쓰면 되겠습니다.
+
+      //1초=1000ms
+      //60초=60000ms=1분
+      //   function 변환(분, 초) {
+      //     return `${분 * 60000 + 초 * 1000}ms`;
+      //   }
+      //   console.log(변환(2, 10));
+
+      //   function 할인(가격, 첫구매여부) {
+      //     if (첫구매여부 === true) {
+      //       return (parseFloat(가격.toFixed(0)) * 9 - 15) / 10;
+      //     } else {
+      //       return (parseFloat(가격.toFixed(0)) * 9) / 10;
+      //     }
+      //   }
+      console.log(할인(70, false));
+      console.log(할인(10, true));
+    </script>
+
+    <!-- 숫자.toFixed(몇자리) 이거 쓰면 됩니다 모든 숫자 뒤에 붙일 수 있습니다. 
+
+근데 주의점은 이렇게 하고 나면 '문자'로 변환해줍니다.
+
+'123'과 123은 다른 타입이라 주의해서 써야합니다.  -->
+    <!-- 
+
+1. 덧셈하기 전에 10 곱해서 덧셈하고 10으로 나누든가 
+
+2. 외부라이브러리 쓰든가 
+
+3. 오차는 무시할 정도로 작으니 그냥 반올림하든가 
+
+하면 됩니다. 아주 정확한 계산이 필요한게 아니면 대부분 그냥 반올림하면 됩니다. -->
+  </body>
+</html>

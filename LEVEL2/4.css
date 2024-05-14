@@ -1,0 +1,22 @@
+button {
+  cursor: pointer;
+}
+.slide-container {
+  width: 500px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.carousel-bg {
+  width: 2000px;
+  transition: all 1s;
+}
+.carousel-img {
+  width: 500px;
+  float: left;
+}
+.carousel-img img {
+  width: 100%;
+}
+.button-area {
+  text-align: center;
+}
