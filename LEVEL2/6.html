@@ -10,38 +10,128 @@
         top: 0;
         width: 100%;
         z-index: 5;
-        background-color: antiquewhite;
+        background-color: aquamarine;
       }
       h1 {
-        font-size: 3rem;
+        font-size: 30px;
+        transition: all 0.5s;
+      }
+      .scroll-line {
+        width: 100%;
+        height: 0;
+        border: 3px solid black;
+        border-radius: 10px;
+        position: absolute;
+        bottom: 0;
+      }
+      .scroll-line-bg {
+        transition: all 0.5s;
+        width: 100%;
+        position: relative;
       }
     </style>
   </head>
   <body>
     <nav>
-      <h1>로고</h1>
+      <h1>Logo</h1>
+      <div class="scroll-line-bg">
+        <div class="scroll-line"></div>
+      </div>
     </nav>
-
-    <div
-      style="width: 200px; height: 100px; overflow-y: scroll; margin-top: 200px"
-    >
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse, omnis.
-      Tempore, expedita dolores. Ex reiciendis a dolore quasi, vero amet
-      quibusdam, non fugiat et optio nobis obcaecati architecto molestiae illo.
+    <div style="height: 100px"></div>
+    <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit earum,
+      laboriosam tenetur laudantium rerum fugit voluptatibus reprehenderit
+      quibusdam provident nemo a adipisci! Porro nemo aut odio vero tenetur
+      quaerat explicabo.
     </div>
-    <div style="height: 200vw"></div>
+    <div style="height: 2000px"></div>
 
     <script>
-      window.addEventListener('scroll', function () {
-        console.log(window.scrollY);
+      // window.addEventListener('scroll', function () {
+      //   console.log(window.scrollY);
+      //   if (window.scrollY >= 100) {
+      //     document.querySelectorAll('h1')[0].style.fontSize = '1rem';
+      //   }
+      // });
+      $(window).on('scroll', function () {
+        console.log($(window).scrollTop());
+        if ($(window).scrollTop() >= 100) {
+          $('h1').css('fontSize', '10px');
+        }
+        if ($(window).scrollTop() < 100) {
+          $('h1').css('fontSize', '30px');
+        }
       });
-      // $(window).on('scroll',function(){
-      //   $(window).scrollTop()
-      // })
+
+      console.log(document.querySelector('html').scrollHeight);
+      //현재페이지실제높이
+      // body태그끝나기전에 넣는게 좋음.
+      // 페이지 로드하고 띄우는게 좋기때문에
+
+      console.log(document.querySelector('html').clientHeight);
+      //페이지 보이는 부분 높이.body태그끝나기전에 넣는게 좋음.
+      // 페이지 로드하고 띄우는게 좋기때문에
+
+      // document
+      //   .querySelectorAll('.lorem')[0]
+      //   .addEventListener('scroll', function () {
+      //     // 스크롤  내린 양= div전체내용 양
+      //     console.log(document.querySelectorAll('.lorem')[0].scrollTop);
+      //     console.log(document.querySelectorAll('.lorem')[0].scrollHeight); //스크롤가능한 실제높이
+      //     let scrollAmount = document.querySelectorAll('.lorem')[0].scrollTop;
+      //     let scrollHeight =
+      //       document.querySelectorAll('.lorem')[0].scrollHeight;
+      //     if (Math.abs(scrollAmount + 100 - scrollHeight) <= 5) {
+      //       alert('다읽었음');
+      //     }
+      //   });
+      let finished = false;
+      $('.lorem').on('scroll', function () {
+        let scrollAmount = $('.lorem').scrollTop();
+        let scrollHeight = $('.lorem').prop('scrollHeight'); //내부높이
+
+        console.log(scrollAmount);
+        console.log(scrollHeight);
+
+        if (Math.abs(scrollAmount + 100 - scrollHeight) <= 10 && !finished) {
+          finished = true;
+          $('.lorem').after('<div class="av">다읽었음<div>');
+          $('.av').css('background', 'yellow');
+        }
+      });
+
+      window.addEventListener('scroll', function () {
+        console.log((window.scrollY / 1392) * 100);
+        document.querySelector('.scroll-line').style.width = `${
+          (window.scrollY / 1392) * 100
+        }%`;
+      });
+
+      // //전체페이지 스크롤
+      // window.addEventListener('scroll', function () {
+      //   // console.log(window.scrollY); px단위
+      //   // window.scrollTo(0, 500);
+      //   //스크롤Y축 500좌표로 강제이동
+      //   // window.scrollBy(0, 100);
+      //   // 현재위치부터 강제로 100px만큼 스크롤
+      // });
+      // $(window).on('scroll', function () {
+      //   // console.log($(window).scrollTop());
+      //   // $(window).scrollTop(100);100위치로스크롤이동
+      // });
+
+      // document
+      //   .querySelectorAll('.lorem')[0]
+      //   .addEventListener('scroll', function () {
+      //     let 스크롤양 = document.querySelectorAll('.lorem')[0].scrollTop; //일반 스크롤바 내린 높이
+
+      //     let 실제높이 = document.querySelectorAll('.lorem')[0].scrollHeight;
+
+      //     let 눈에보이는높이 =
+      //       document.querySelectorAll('.lorem')[0].clientHeight;
+      //     console.log(스크롤양, 실제높이, 눈에보이는높이);
+      //   });
     </script>
-    <!-- // console.log(window.scrollY); //px단위로 스크롤을 얼마나내렸는지 알려줌 //
-    console.log(window.scrollX); -->
-    <!-- window.scrollTo(x좌표,y좌표) :강제로 어떤 위치로 스크롤되어있음-->
-    <!-- window.scrollBy(0,100)  현재위치에서 100만큼 y축스크롤해주세요-->
   </body>
 </html>

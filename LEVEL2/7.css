@@ -1,0 +1,41 @@
+div {
+  box-sizing: border-box;
+}
+
+.tap-container {
+  width: 600px;
+  margin: 0 auto;
+
+  border: 1px solid #eee;
+}
+
+.tap-menu {
+  background-color: #eee;
+}
+.tap-menu ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+.tap-menu li {
+  list-style: none;
+  padding: 1rem;
+}
+.tap-menu li:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+.tap-menu li:active {
+  background-color: pink;
+}
+.tap-content {
+  width: 100%;
+  padding: 0 1rem;
+  background-color: #e3dfdf;
+  padding: 1rem 1rem;
+  position: absolute;
+}
+.tap-content h1 {
+  margin: 0;
+  padding: 1rem 0;
+}
