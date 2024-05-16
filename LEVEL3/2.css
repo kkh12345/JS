@@ -1,0 +1,31 @@
+.content {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+.card-flex {
+  display: flex;
+}
+.card-container {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 0 0.5px;
+}
+.card-img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+.card-content {
+  padding: 1rem;
+}
+.card-title {
+  margin: 0;
+}
+.card-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 1rem;
+  border-radius: 10px;
+}
