@@ -125,6 +125,7 @@ $('input').on('input', function (e) {
       <h2 class="card-title">${data['title']}</h2>
       <p class="card-price">가격 : ${data['price']}</p>
       <button class="card-button">주문하기</button>
+      <button class="buy">구매</button>
     </div>
     </div>`;
       document
@@ -171,6 +172,8 @@ function repeat(array) {
       <h2 class="card-title">${data['title']}</h2>
       <p class="card-price">가격 : ${data['price']}</p>
       <button class="card-button">주문하기</button>
+      <button class="buy">구매</button>
+      
     </div>
     </div>`;
     document
@@ -178,3 +181,67 @@ function repeat(array) {
       .insertAdjacentHTML('beforeend', 템플릿);
   });
 }
+
+// 변수의 단점
+// 새로고침 시 초기값으로 변함.
+// localStorage.setItem('나', '바보');
+// console.log(localStorage.getItem('나'));
+// localStorage.removeItem('나');
+// localStorage.setItem('num', '[1,2,3,4]');
+// let arr = [1, 23, 2, 2312, 3, 3];
+
+// let newArr = JSON.stringify(arr); //Json 형식으로 바꿔줌
+// localStorage.setItem('num2', newArr);
+// let 꺼낸거 = localStorage.getItem('num2');
+// console.log(JSON.parse(꺼낸거));
+// localStorage.removeItem('num');
+
+//방법1
+// products.forEach(function (data, i) {
+//   $('.buy')
+//     .eq(i)
+//     .on('click', function () {
+//       if (localStorage['length'] == 0) {
+//         console.log('비어있음');
+//         console.log(data);
+//         localStorage.setItem('cart', JSON.stringify([data['title']]));
+//       } else {
+//         console.log('비어있지않음');
+//         let getItem = localStorage.getItem('cart');
+//         console.log(getItem);
+//         let getItemParse = JSON.parse(getItem);
+//         getItemParse.push(data['title']);
+//         let setItem = JSON.stringify(getItemParse);
+//         localStorage.setItem('cart', setItem);
+//       }
+//     });
+// });
+
+//방법2
+//구매버튼누르면
+//내 윗 제목 요소의 내용을 가져와서
+//비었을경우
+//[내용]을 JSON으로 변경 후에
+//localstorage에 저장
+//빈 배열이 아닌 경우는
+//localstarage의 cart를 가져와서
+//parse후 push하고 다시stringfy 후 localstrage에 넣음
+products.forEach(function (data, i) {
+  $('.buy')
+    .eq(i)
+    .on('click', function (e) {
+      let itemObj = {
+        title:
+          e.target.previousElementSibling.previousElementSibling
+            .previousElementSibling.innerHTML,
+        num: 1,
+      };
+      if (localStorage['length'] == 0) {
+        console.log('비었음');
+        localStorage.setItem('cart', JSON.stringify([itemObj]));
+      } else {
+        console.log('안비었음');
+        let getCart = JSON.parse(localStorage.getItem('cart'));
+      }
+    });
+});

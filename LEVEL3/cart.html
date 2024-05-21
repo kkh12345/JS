@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>장바구니 목록</h1>
+  </body>
+  <script>
+    let 내용 = JSON.parse(localStorage.getItem('cart'));
+    console.log(내용);
+    내용.forEach(function (data, i) {
+      let 템플릿 = `<p>${내용[i]}</p>`;
+      document.querySelector('h1').insertAdjacentHTML('afterend', 템플릿);
+    });
+  </script>
+</html>
