@@ -12,7 +12,7 @@
     let 내용 = JSON.parse(localStorage.getItem('cart'));
     console.log(내용);
     내용.forEach(function (data, i) {
-      let 템플릿 = `<p>${내용[i]}</p>`;
+      let 템플릿 = `<p>${data['title']}(${data['num']}개)</p>`;
       document.querySelector('h1').insertAdjacentHTML('afterend', 템플릿);
     });
   </script>

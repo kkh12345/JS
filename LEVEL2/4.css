@@ -8,7 +8,7 @@ button {
 }
 .carousel-bg {
   width: 2000px;
-  transition: all 1s;
+  /* transition: all 1s; */
 }
 .carousel-img {
   width: 500px;

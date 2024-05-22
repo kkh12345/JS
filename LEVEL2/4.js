@@ -74,3 +74,20 @@ $('.before').on('click', function () {
   $('.carousel-bg').css('transform', `translateX(${현재위치}px)`);
   console.log(현재위치);
 });
+
+//mousedown
+//mouseup
+//mousemove 요소에 마우스를 움직였을떄
+
+let 시작좌표;
+
+$('.carousel-img')
+  .eq(0)
+  .on('mousedown', function (event) {
+    // console.log(event.clientX); //현재 마우스 좌표
+  });
+$('.carousel-img')
+  .eq(0)
+  .on('mousemove', function (event) {
+    // console.log(event.clientX); //현재 마우스 좌표
+  });

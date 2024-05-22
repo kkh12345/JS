@@ -217,31 +217,49 @@ function repeat(array) {
 //     });
 // });
 
-//방법2
-//구매버튼누르면
-//내 윗 제목 요소의 내용을 가져와서
-//비었을경우
-//[내용]을 JSON으로 변경 후에
-//localstorage에 저장
-//빈 배열이 아닌 경우는
-//localstarage의 cart를 가져와서
-//parse후 push하고 다시stringfy 후 localstrage에 넣음
 products.forEach(function (data, i) {
   $('.buy')
     .eq(i)
     .on('click', function (e) {
       let itemObj = {
-        title:
-          e.target.previousElementSibling.previousElementSibling
-            .previousElementSibling.innerHTML,
+        title: $(e.target).siblings('h2').text(),
         num: 1,
       };
+
       if (localStorage['length'] == 0) {
         console.log('비었음');
         localStorage.setItem('cart', JSON.stringify([itemObj]));
       } else {
         console.log('안비었음');
         let getCart = JSON.parse(localStorage.getItem('cart'));
+        //===여기까지 잘 작동 됨===//
+        //---try1---//
+        let index = 0;
+        let same;
+        getCart.forEach((data, i) => {
+          if (data['title'] === itemObj['title']) {
+            index = i;
+            same = true;
+          }
+        });
+        if (same) {
+          getCart[index]['num']++;
+        } else if (!same) {
+          getCart.push(itemObj);
+        }
+        localStorage.setItem('cart', JSON.stringify(getCart));
+        //---try2---//
+        // let index = getCart.findIndex((a) => {
+        //   return a['title'] === itemObj['title'];
+        // });
+        // if (index == -1) {
+        //   console.log('같은거없음');
+        //   getCart.push(itemObj);
+        // } else {
+        //   console.log('같은거있음');
+        //   getCart[index]['num']++;
+        // }
+        // localStorage.setItem('cart', JSON.stringify(getCart));
       }
     });
 });
