@@ -6,8 +6,27 @@
     <title>Document</title>
   </head>
   <body>
-    <h4>물에 빠지면 누구먼저 구할 것임?</h4>
-    <button>와이프</button><button>부모님</button><button>키우던 개</button>
-    <script></script>
+    <div class="quiz">
+      <h4>물에 빠지면 누구먼저 구할 것임?</h4>
+      <button>와이프</button><button>부모님</button><button>키우던 개</button>
+    </div>
+
+    <script>
+      document
+        .querySelectorAll('.quiz')[0]
+        .addEventListener('click', function (e) {
+          switch (e.target.textContent) {
+            case '와이프':
+              alert('와이프를 좋아하시네요');
+              break;
+            case '부모님':
+              alert('효자네요');
+              break;
+            case '키우던 개':
+              alert('사람보다 동물이 낫네요');
+              break;
+          }
+        });
+    </script>
   </body>
 </html>
