@@ -20,7 +20,8 @@ function App() {
     '파이썬독학',
   ]); //state, 값이변경되면 html재렌더링, 자주변경될거같은 html부분을 state로 해놓으면 좋음
   let [like, changeLikeNum] = useState(0);
-
+  let [modal, setModal] = useState(false);
+  let modalClick = 0;
   //3-1 state 변경하는 법
   //state변경함수(새로운state)
   //3-2 onClick이벤트핸들러 onClick={함수}
@@ -46,7 +47,15 @@ function App() {
         className="sort"
         onClick={() => {
           let copy = [...글제목];
-          let sort = copy.sort();
+          let sort = copy.sort((a, b) => {
+            if (a == b) {
+              return 0;
+            } else if (a < b) {
+              return -1;
+            } else {
+              return 1;
+            }
+          });
           console.log(글제목, sort);
           글제목변경(sort);
         }}
@@ -66,10 +75,47 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4>{글제목[2]}</h4>
+        <h4
+          onClick={() => {
+            modalClick++;
+            if (modalClick % 2 != 0) {
+              setModal(true);
+            } else {
+              setModal(false);
+            }
+          }}
+        >
+          {글제목[2]}
+        </h4>
         <p>2월 17일 발행</p>
       </div>
+
+      {
+        //html중간에 ir 문 못써서 if대용
+        modal == true ? <Modal /> : null
+      }
     </div>
+  );
+}
+
+//component 문법 쓰면 좋은 상황
+//1.반복적인 html축약할떄
+//2. 큰 페이지들
+//3. 자주변경되는 html ui
+//첫글자 대문자
+// state갖다 쓸때 불편함이 생길 수 있기때문에 조심
+
+function Modal() {
+  return (
+    // 의미없는 div같은거 div 없애고 <></>로 써도됨
+    // 태그여러개 병렬정렬한걸 하나로묶을떄
+    <>
+      <div className="modal">
+        <h4>제목</h4>
+        <p>날짜</p>
+        <p>상세내용</p>
+      </div>
+    </>
   );
 }
 
@@ -86,3 +132,8 @@ export default App;
 // 리액트에서 array/object state를 수정하고 싶으면
 
 // 독립적인 카피본을 만들어서 수정하는게 좋습니다.
+
+//동적인 UI작성하는 순서
+//1.디자인완성
+//2.UI의 현재 상태를 state로 저장
+//3 state에 따라 UI가 어떻게 보일지 작성
