@@ -1,4 +1,4 @@
-// eslint-disable
+// eslint - disable;
 //warning메세지 기능 끔
 
 import logo from './logo.svg';
@@ -19,15 +19,19 @@ function App() {
     '강남 우동맛집',
     '파이썬독학',
   ]); //state, 값이변경되면 html재렌더링, 자주변경될거같은 html부분을 state로 해놓으면 좋음
-  let [like, changeLikeNum] = useState(0);
+  let [like, changeLikeNum] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
   let modalClick = 0;
   //3-1 state 변경하는 법
   //state변경함수(새로운state)
   //3-2 onClick이벤트핸들러 onClick={함수}
-  function likeClick() {
-    changeLikeNum(like + 1); //like state를 like+1로 갈아치워주세요
-  }
+  let likeClickNum = (i) => {
+    let copy = [...like];
+    copy[i] = copy[i] + 1;
+    changeLikeNum(copy);
+  };
+
+  let [target, setTarget] = useState(0);
 
   return (
     <div className="App">
@@ -39,6 +43,7 @@ function App() {
           let copy = [...글제목];
           copy[0] = '여자 코트 추천';
           글제목변경(copy);
+          console.log(copy);
         }}
       >
         버튼
@@ -62,12 +67,10 @@ function App() {
       >
         가나다순정렬
       </button>
-      <div className="list">
+      {/* <div className="list">
         <h4>
           {글제목[0]} <span onClick={likeClick}>👍</span> {like}
         </h4>
-
-        {/* array/object다룰 때 원본은 보존하는게 좋음 */}
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
@@ -88,11 +91,39 @@ function App() {
           {글제목[2]}
         </h4>
         <p>2월 17일 발행</p>
-      </div>
+      </div> */}
 
       {
-        //html중간에 ir 문 못써서 if대용
-        modal == true ? <Modal /> : null
+        //중괄호안엔 for반복문 못씀
+        글제목.map(function (a, i) {
+          return (
+            <div className="list" key={i}>
+              <h4
+                onClick={() => {
+                  modalClick++;
+                  if (modalClick % 2 != 0) {
+                    setModal(true);
+                  } else {
+                    setModal(false);
+                  }
+                  console.log(i);
+                  setTarget(i);
+                  console.log(target);
+                }}
+              >
+                {글제목[i]}
+              </h4>
+              <span onClick={() => likeClickNum(i)}>👍</span> {like[i]}
+              <p>2월 17일 발행</p>
+            </div>
+          );
+        })
+      }
+      {
+        //html중간에 if문 못써서 if대용
+        modal == true ? (
+          <Modal 글제목변경={글제목변경} color={'yellow'} 글제목={글제목} />
+        ) : null
       }
     </div>
   );
@@ -105,15 +136,25 @@ function App() {
 //첫글자 대문자
 // state갖다 쓸때 불편함이 생길 수 있기때문에 조심
 
-function Modal() {
+//props는 부모에서 자식한테만 전송가능
+function Modal(props) {
   return (
     // 의미없는 div같은거 div 없애고 <></>로 써도됨
     // 태그여러개 병렬정렬한걸 하나로묶을떄
     <>
-      <div className="modal">
-        <h4>제목</h4>
+      <div className="modal" style={{ background: props.color }}>
+        <h4>{props.글제목[0]}</h4>
         <p>날짜</p>
         <p>상세내용</p>
+        <button
+          onClick={() => {
+            let copy = [...props.글제목];
+            copy[0] = '여자 코트 추천';
+            props.글제목변경(copy);
+          }}
+        >
+          글수정
+        </button>
       </div>
     </>
   );

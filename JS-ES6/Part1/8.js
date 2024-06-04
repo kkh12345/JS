@@ -146,3 +146,29 @@ console.log(obj2);
 //카피하다가 값 중복이 일어나면??...가장 뒤에 있는 걸 적용한다.
 obj2 = { ...obj1, a: 5 };
 console.log(obj2);
+
+//함수에 파라미터 넣을 떄
+function 더하기(a, b, c) {
+  console.log(a + b + c);
+}
+어레이 = [1, 2, 3];
+더하기(...어레이);
+더하기.apply(undefined, 어레이);
+
+//apply함수
+let person = {
+  인사: function () {
+    console.log(this.name + '안녕');
+  },
+};
+person.인사();
+
+let person2 = {
+  name: '손흥민',
+};
+//apply,call 함수를 옮겨와서 실행해주세요
+// person2.인사(); 하고싶으면?
+person.인사.apply(person2, [1, 2]);
+// 파라미터 arr형태 가능
+person.인사.call(person2, 1, 2);
+//파라미터

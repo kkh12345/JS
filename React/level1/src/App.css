@@ -25,3 +25,6 @@ div {
   text-align: start;
   background-color: #ccc;
 }
+.list h4 {
+  display: inline-block;
+}
