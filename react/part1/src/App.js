@@ -16,7 +16,7 @@ function App() {
   let posts = '강남 우동 맛집';
   let [modal, setModal] = useState(false);
   let [color, changeColor] = useState({ background: 'skyBlue' });
-  let [modalTitle, setModalTitle] = useState('');
+  let [modalTitle, setModalTitle] = useState(0);
 
   return (
     <div className="App">
@@ -61,7 +61,7 @@ function App() {
                 } else {
                   setModal(false);
                 }
-                setModalTitle(a);
+                setModalTitle(i);
               }}
             >
               {a}
@@ -96,7 +96,7 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal" style={props.color}>
-      <h4>{props.modalTitle}</h4>
+      <h4>{props.글제목[props.modalTitle]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
       <button
