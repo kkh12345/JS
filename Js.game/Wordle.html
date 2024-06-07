@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wordle</title>
+    <style>
+      html {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 1200px;
+        padding: 20px;
+        text-align: center;
+      }
+      input {
+        width: 50px;
+        height: 50px;
+        font-size: 40px;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+      }
+      .answer {
+        width: 200px;
+        display: block;
+        margin: 20px auto;
+        font-size: 20px;
+      }
+      .row {
+        display: block;
+        margin: 10px 0;
+      }
+      .wrapper {
+        display: none;
+      }
+      .finished-btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: black;
+        color: white;
+        display: none;
+        margin-top: 20px;
+      }
+      .answer-btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Wordle</h1>
+      <input
+        class="answer"
+        type="text"
+        placeholder="5자리입력"
+        maxlength="5"
+        minlength="5"
+      />
+      <button class="answer-btn">제출</button>
+      <div class="wrapper">
+        <dlv class="row"
+          ><input type="text" class="input" maxlength="1" />
+          <input type="text" class="input" maxlength="1" />
+          <input type="text" class="input" maxlength="1" />
+          <input type="text" class="input" maxlength="1" />
+          <input type="text" class="input" maxlength="1"
+        /></dlv>
+      </div>
+      <button class="finished-btn">입력완료</button>
+    </div>
+  </body>
+
+  <script>
+    let count = 1;
+    let answer = '';
+    document.querySelector('.answer-btn').addEventListener('click', () => {
+      answer = document.querySelector('.answer').value;
+      if (answer != '') {
+        document.querySelector('.wrapper ').style.display = 'block';
+        document.querySelector('.finished-btn').style.display = 'inline-block';
+        document.querySelector('.answer-btn ').style.display = 'none';
+        document.querySelector('.answer ').style.display = 'none';
+      }
+    });
+
+    document.querySelector('.finished-btn').addEventListener('click', () => {
+      console.log(1);
+      let input = document.querySelectorAll('.input');
+      count++;
+      for (let i = 0; i < input.length; i++) {
+        let inputValue = input[i].value;
+        if (inputValue == '') {
+          input[i].style.background = 'gray';
+        } else if (answer.includes(inputValue) && answer[i] == inputValue) {
+          input[i].style.background = 'greenyellow';
+        } else if (answer.includes(inputValue)) {
+          input[i].style.background = 'yellow';
+        } else {
+          input[i].style.background = 'gray';
+          input[i].style.color = 'white';
+        }
+        input[i].classList.remove('input');
+        input[i].disabled = 'true';
+      }
+
+      if (count <= 5) {
+        let templates = ` <dlv class="row"
+        ><input type="text" class="input" maxlength="1" />
+        <input type="text" class="input" maxlength="1" />
+        <input type="text" class="input" maxlength="1" />
+        <input type="text" class="input" maxlength="1" />
+        <input type="text" class="input" maxlength="1"
+      /></dlv>
+    </div>`;
+        document
+          .querySelector('.wrapper')
+          .insertAdjacentHTML('beforeend', templates);
+      } else if (count == 6) {
+        let templates = ` <dlv class="row"
+        ><p>기회가 끝났습니다.</p>
+        <p>새로고침을 누르세요.</p></dlv>
+    </div>`;
+        document
+          .querySelector('.wrapper')
+          .insertAdjacentHTML('beforeend', templates);
+      }
+    });
+  </script>
+</html>
