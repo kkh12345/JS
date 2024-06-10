@@ -12,3 +12,15 @@ function Student(이름) {
 
 let 학생1 = new Student('박');
 let 학생2 = new Student('이');
+
+// function products(이름, 가격) {
+//   this.name = 이름;
+//   this.price = 가격;
+//   this.부가세 = function () {
+//     console.log(this.price * 0.1);
+//   };
+// }
+// const products1 = new products('shirts', 50000);
+// const products2 = new products('pants', 60000);
+
+// products1.부가세();

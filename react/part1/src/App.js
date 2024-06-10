@@ -17,6 +17,7 @@ function App() {
   let [modal, setModal] = useState(false);
   let [color, changeColor] = useState({ background: 'skyBlue' });
   let [modalTitle, setModalTitle] = useState(0);
+  let [입력값, 입력값변경] = useState('');
 
   return (
     <div className="App">
@@ -65,17 +66,28 @@ function App() {
               }}
             >
               {a}
+              <span
+                onClick={(e) => {
+                  let copy = [...like];
+                  copy[i]++;
+                  changeLike(copy);
+                  e.stopPropagation();
+                }}
+              >
+                👍
+              </span>
+              {like[i]}
             </h4>
-            <span
-              onClick={() => {
-                let copy = [...like];
-                copy[i]++;
-                changeLike(copy);
+            <button
+              className="delete"
+              onClick={(e) => {
+                let copy = [...글제목];
+                copy.splice(i, 1);
+                글제목변경(copy);
               }}
             >
-              👍
-            </span>
-            {like[i]}
+              삭제
+            </button>
             <p>2월 17일 발행</p>
           </div>
         );
@@ -89,6 +101,23 @@ function App() {
           글제목={글제목}
         ></Modal>
       ) : null}
+
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+        }}
+      ></input>
+      <button
+        className="add-btn"
+        onClick={() => {
+          let copy = [...글제목];
+
+          copy.unshift(입력값);
+          글제목변경(copy);
+        }}
+      >
+        추가
+      </button>
     </div>
   );
 }

@@ -20,9 +20,7 @@ div {
   padding: 20px;
   border-bottom: 1px solid grey;
 }
-.list h4 {
-  display: inline-block;
-}
+
 .modal {
   text-align: start;
   background-color: #ccc;
@@ -30,4 +28,12 @@ div {
 }
 .modal h4 {
   margin: 0;
+}
+.delete {
+  float: right;
+}
+.list::after {
+  content: '';
+  clear: both;
+  display: block;
 }
