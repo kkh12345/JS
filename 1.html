@@ -20,8 +20,8 @@
       box-sizing: border-box;
     }
     .container {
-      max-width: 600px;
-      width: 500px;
+      max-width: 500px;
+      width: 70%;
       padding: 30px 30px 20px;
       border: 1px solid green;
       display: flex;
@@ -36,11 +36,17 @@
     #id,
     #password {
       display: block;
-      width: 300px;
+      max-width: 300px;
+      width: 80%;
       font-size: 1rem;
       padding: 10px;
       margin: 10px 0;
       border: 1px solid green;
+    }
+    #id:focus,
+    #password:focus {
+      border: none;
+      outline: 1px solid orange;
     }
     .login-btn {
       margin-top: 30px;
