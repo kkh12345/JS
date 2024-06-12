@@ -5,8 +5,37 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import React from 'react';
+
+class 덩어리 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      abc: 'q',
+      age: '20',
+    };
+  }
+  render() {
+    return (
+      <div>
+        {this.state.age}
+
+        <button
+          onClick={() => {
+            this.setState({ age: '32' });
+            console.log(this.props.like);
+          }}
+        >
+          버튼
+        </button>
+      </div>
+    );
+  }
+}
 
 function App() {
+  let today = new Date();
+  console.log(today.getDate());
   let [like, changeLike] = useState([0, 0, 0]);
   let [글제목, 글제목변경] = useState([
     '남자 코트 추천',
@@ -18,9 +47,13 @@ function App() {
   let [color, changeColor] = useState({ background: 'skyBlue' });
   let [modalTitle, setModalTitle] = useState(0);
   let [입력값, 입력값변경] = useState('');
+  const [현재날짜, 현재날짜변경] = useState(
+    `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`
+  );
 
   return (
     <div className="App">
+      <덩어리 like={like}></덩어리>
       <div className="black-nav">
         <h4>블로그임</h4>
       </div>
@@ -51,7 +84,6 @@ function App() {
       >
         가나다순정렬
       </button>
-
       {글제목.map((a, i) => {
         return (
           <div className="list" key={i}>
@@ -74,13 +106,13 @@ function App() {
                   e.stopPropagation();
                 }}
               >
-                👍
+                👍 {like[i]}
               </span>
-              {like[i]}
             </h4>
             <button
               className="delete"
-              onClick={(e) => {
+              onClick={() => {
+                console.log(i);
                 let copy = [...글제목];
                 copy.splice(i, 1);
                 글제목변경(copy);
@@ -88,11 +120,10 @@ function App() {
             >
               삭제
             </button>
-            <p>2월 17일 발행</p>
+            <p>{현재날짜}</p>
           </div>
         );
       })}
-
       {modal == true ? (
         <Modal
           modalTitle={modalTitle}
@@ -110,10 +141,14 @@ function App() {
       <button
         className="add-btn"
         onClick={() => {
-          let copy = [...글제목];
-
-          copy.unshift(입력값);
-          글제목변경(copy);
+          if (입력값 != '') {
+            let copy = [...글제목];
+            copy.unshift(입력값);
+            글제목변경(copy);
+            let copyLike = [...like];
+            copyLike.unshift(0);
+            changeLike(copyLike);
+          }
         }}
       >
         추가
@@ -140,4 +175,5 @@ function Modal(props) {
     </div>
   );
 }
+
 export default App;
