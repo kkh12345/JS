@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Chating</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #chatContentArea {
+        overflow-y: scroll;
+      }
+      .nav {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 20px;
+      }
+      .nav > * {
+        color: gray;
+      }
+      .nav > *::after {
+        content: '|';
+        padding: 0 10px;
+      }
+      .nav a {
+        text-decoration: none;
+        color: gray;
+        font-size: 16px;
+      }
+      .container {
+        display: flex;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--상단 바-->
+    <div class="nav">
+      <span id="myIdArea"></span>
+      <a href="/member/logout">로그아웃</a>
+    </div>
+
+    <!--중단 바-->
+    <div class="container">
+      <div
+        style="display: flex; width: 85%; height: 50vh; border: 1px solid black"
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            width: 50%;
+          "
+        >
+          <button id="matchingStartBtn" onclick="matching('drowGameStart')">
+            매칭 시작
+          </button>
+          <button
+            id="matchingCancleBtn"
+            style="display: none"
+            onclick="matching('drowGameCancle')"
+          >
+            매칭 취소
+          </button>
+        </div>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            width: 50%;
+          "
+        >
+          <a href="#">bbbbnbb</a>
+        </div>
+      </div>
+      <!--현재 접속중인 유저-->
+      <div class="online-user" style="text-align: center; width: 15%">
+        <div style="border: 1px solid black; text-align: center">
+          <table id="memberListTable" style="text-align: center"></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="chattingArea" style="border: 1px solid black; width: 300px">
+      <div
+        id="memberNameArea"
+        style="border: 1px solid black; text-align: center"
+      ></div>
+      <div id="chatContentArea" style="height: 300px"></div>
+      <div style="display: flex">
+        <input id="message" type="text" style="width: 240px" />
+        <button onclick="setMessage()" style="width: 60px">전송</button>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const memberListTable = document.getElementById('memberListTable');
+      const chattingArea = document.getElementById('chattingArea');
+      const memberNameArea = document.getElementById('memberNameArea');
+      const chatContentArea = document.getElementById('chatContentArea');
+      const message = document.getElementById('message');
+      const myIdArea = document.getElementById('myIdArea');
+      const matchingStartBtn = document.getElementById('matchingStartBtn');
+      const matchingCancleBtn = document.getElementById('matchingCancleBtn');
+      let myId = '';
+
+      let chattingAreaMemberName = '';
+      let chattingAreaIsTrue = false;
+      let chattingData = [];
+
+      //채팅창 공강 기본 숨김
+      chattingArea.style.display = 'none';
+
+      let memberList = [];
+      var ws;
+
+      function matching(request) {
+        if (request == 'drowGameStart') {
+          const requestParam = new RequestParam('matchingStartDrowGame');
+          send(requestParam);
+
+          matchingStartBtn.style.display = 'none';
+          matchingCancleBtn.style.display = 'block';
+        }
+
+        if (request == 'drowGameCancle') {
+          const requestParam = new RequestParam('matchingCancleDrowGame');
+          send(requestParam);
+
+          matchingStartBtn.style.display = 'block';
+          matchingCancleBtn.style.display = 'none';
+        }
+      }
+
+      //생성자
+      function RequestParam(request, receiver = '', data = '') {
+        this.request = request;
+        this.receiver = receiver;
+        this.data = data;
+      }
+
+      //로그인 후 main 페이지 로드 시 소캣 연걸
+      window.onload = wsOpen;
+      function wsOpen() {
+        ws = new WebSocket('ws://' + location.host + '/start');
+        wsEvt();
+      }
+
+      //소캣 이벤트
+      function wsEvt() {
+        //소캣 오픈 이벤트
+        ws.onopen = function (data) {
+          //
+        };
+
+        //소캣 메시지 이벤트
+        ws.onmessage = function (data) {
+          let msg = JSON.parse(data.data);
+          receiveMessageHandler(msg);
+        };
+      }
+
+      //메시지 처리 핸들러
+      function receiveMessageHandler(msg) {
+        // 다른 member 에게 메시지를 받은 경우
+        if (msg.request == 'sendMessage') {
+          //chattingData 배열에 msg 추가
+          chattingData.push(msg);
+
+          //내가 보낸 메시지 일 경우
+          if (msg.sender == myId) {
+            chatContentArea.innerHTML += `<p style="text-align: right; margin: 0px;">${msg.content}</p>`;
+          }
+          //상대가 보낸 메시지 일 경우
+          else {
+            // receiver 와 myId 동일해야함
+            // getMember() 와 sender 가 동일해야함
+            if (myId == msg.receiver && getMember() == msg.sender) {
+              chatContentArea.innerHTML += `<p style="text-align: left; margin: 0px;">${msg.content}</p>`;
+            }
+          }
+
+          //스크롤 위치 조정
+          chatContentArea.scrollTop = chatContentArea.scrollHeight;
+        }
+
+        //chattingData 배열형식으로 넘어옴
+        if (Array.isArray(msg)) {
+          chattingData = msg;
+        }
+
+        //myId
+        if (msg.myId != undefined) {
+          myIdArea.innerHTML = `${msg.myId}`;
+          myId = msg.myId;
+        }
+
+        //logOutMember
+        if (msg.logOutMember != undefined) {
+          console.log(msg.logOutMember);
+        }
+
+        //memberList 처리
+        if (msg.member != undefined) {
+          let isMemberExist = 0;
+
+          //중복 검사
+          isMemberExist = duplicateCheck(msg, isMemberExist);
+
+          //memberList 에 member 추가
+          if (isMemberExist == 0) {
+            memberList.push(msg.member);
+            memberListTable.innerHTML = `
+                    <tr>
+                        <th>접속중</th>
+                    </tr>
+                `;
+            for (let i = 0; i < memberList.length; i++) {
+              memberListTable.innerHTML += `
+                        <tr>
+                            <td id="member_${i}" onclick="chat('${memberList[i]}')">${memberList[i]}</td>
+                        </tr>
+                    `;
+            }
+          }
+        }
+      }
+
+      //현재 열려있는 채팅창의 member 를 저장
+      let member;
+      function getMember() {
+        return member;
+      }
+      function setMember(m) {
+        member = m;
+      }
+
+      function chat(member) {
+        setMember(member);
+        memberNameArea.innerHTML = member;
+
+        //채팅 공간 토글 처리
+        if (chattingAreaMemberName != member) {
+          chattingAreaMemberName = member;
+        } else {
+          chattingAreaIsTrue = !chattingAreaIsTrue;
+        }
+
+        //채팅 공간이 열려있을 때
+        if (chattingAreaIsTrue) {
+          chattingArea.style.display = 'none';
+        } else {
+          chatContentArea.innerHTML = '';
+          inputAllChattingData(member);
+          chattingArea.style.display = 'block';
+          chatContentArea.scrollTop = chatContentArea.scrollHeight;
+        }
+      }
+
+      //메시지 set
+      function setMessage() {
+        const requestParam = new RequestParam(
+          'sendMessage',
+          memberNameArea.innerHTML,
+          message.value
+        );
+        send(requestParam);
+        message.value = '';
+      }
+
+      //메시지 전송
+      function send(requestParam) {
+        ws.send(JSON.stringify(requestParam));
+      }
+
+      //멤버 중복체크
+      function duplicateCheck(msg, isMemberExist) {
+        for (let i = 0; i < memberList.length; i++) {
+          if (memberList[i] == msg.member) {
+            isMemberExist++;
+          }
+        }
+        return isMemberExist;
+      }
+
+      //채팅공간에 채팅 데이터 입력
+      function inputAllChattingData(member) {
+        for (let i = 0; i < chattingData.length; i++) {
+          if (
+            (chattingData[i].sender == member &&
+              chattingData[i].receiver == myId) ||
+            (chattingData[i].sender == myId &&
+              chattingData[i].receiver == member)
+          ) {
+            if (chattingData[i].sender == myId) {
+              chatContentArea.innerHTML += `<p style="text-align: right; margin: 0px;">${chattingData[i].content}</p>`;
+            } else {
+              chatContentArea.innerHTML += `<p style="text-align: left; margin: 0px;">${chattingData[i].content}</p>`;
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -25,15 +25,14 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">쇼핑몰</Navbar.Brand>
           <Nav className="me-auto">
-            <Link
+            <a
+              className="home"
               onClick={() => {
                 navigate('/');
               }}
-              className="home"
-              to="/"
             >
-              Home
-            </Link>
+              홈
+            </a>
             <Link
               onClick={() => {
                 navigate('/detail');
