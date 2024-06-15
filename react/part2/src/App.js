@@ -33,15 +33,7 @@ function App() {
             >
               홈
             </a>
-            <Link
-              onClick={() => {
-                navigate('/detail');
-              }}
-              className="detail"
-              to="/detail"
-            >
-              Detail
-            </Link>
+
             <Link to="/event" className="event">
               Event
             </Link>

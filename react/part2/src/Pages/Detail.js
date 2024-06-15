@@ -1,36 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import styled from 'styled-components';
 
-let RedBtn = styled.button`
-  background: ${(props) => props.bg};
-  color: ${(props) => (props.bg == 'blue' ? 'yellow' : 'white')};
-  padding: 10px;
+let Discount = styled.div`
+  padding: 20px;
+  background-color: beige;
 `;
 
-let Box = styled.div`
-  background: gray;
-  padding: 20px;
-`;
-let NewBtn = styled(RedBtn)`
-  background: orange;
-`;
 //다른 js파일에선 못씀
 
 function DetailPage(props) {
+  let [display, setDisplay] = useState(true);
   let { id } = useParams();
   let find = props.shoes.find((a) => {
     return a.id == id;
   });
 
+  useEffect(() => {
+    //html렌더링 후 동작
+    let a = setTimeout(() => {
+      setDisplay(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(a);
+    };
+  }, []);
   return (
     <div className="container">
-      {/* <Box>
-        <RedBtn bg="blue">버튼</RedBtn>
-        <RedBtn bg="red">버튼</RedBtn>
-        <NewBtn>버튼</NewBtn>
-      </Box> */}
-
+      {display == true ? <Discount>2초이내 구매시 할인</Discount> : null}
       <div className="row">
         <div className="col-md-6">
           <img
