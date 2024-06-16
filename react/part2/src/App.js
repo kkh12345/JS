@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import bg from './bg.png';
 import {
@@ -76,6 +76,12 @@ function EventPage() {
   );
 }
 function MainPage(props) {
+  let [inputValue, setInputValue] = useState(0);
+  // let [number, setNumber] = useState(false);
+  // useEffect(() => {
+  //   /^[0-9]*$/.test(inputValue) == true ? setNumber(true) : setNumber(false);
+  // }, [inputValue]);
+
   return (
     <>
       <div
@@ -107,6 +113,16 @@ function MainPage(props) {
       >
         가나다순정렬
       </button>
+      <input
+        className="number"
+        onInput={(e) => {
+          setInputValue(e.target.value);
+        }}
+        placeholder="숫자입력"
+      ></input>
+      {isNaN(inputValue) ? (
+        <div style={{ color: 'red' }}>그러지마셈</div>
+      ) : null}
     </>
   );
 }
