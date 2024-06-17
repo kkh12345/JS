@@ -15,6 +15,7 @@ import {
 import data from './data';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import DetailPage from './Pages/Detail';
+import axios from 'axios';
 
 function App() {
   let navigate = useNavigate();
@@ -75,8 +76,38 @@ function EventPage() {
     </div>
   );
 }
+
 function MainPage(props) {
   let [inputValue, setInputValue] = useState(0);
+  let [count, setCount] = useState(0);
+  let [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log(count);
+    count == 1
+      ? axios
+          .get('https://codingapple1.github.io/shop/data2.json')
+          .then((result) => {
+            let copy = [...props.shoes, ...result.data];
+            props.setShoes(copy);
+          })
+          .catch(() => {
+            console.log('실패함');
+          })
+      : count == 2
+      ? axios
+          .get('https://codingapple1.github.io/shop/data3.json')
+          .then((result) => {
+            let copy = [...props.shoes, ...result.data];
+            props.setShoes(copy);
+          })
+          .catch(() => {
+            console.log('실패함');
+          })
+      : console.log(props.shoes);
+    setLoading(false);
+  }, [count]);
+
   // let [number, setNumber] = useState(false);
   // useEffect(() => {
   //   /^[0-9]*$/.test(inputValue) == true ? setNumber(true) : setNumber(false);
@@ -96,33 +127,55 @@ function MainPage(props) {
           })}
         </Row>
       </Container>
-      <button
-        onClick={() => {
-          let copy = [...props.shoes];
-          copy.sort((a, b) => {
-            if (a.title == b.title) {
-              return 0;
-            } else if (a.title < b.title) {
-              return -1;
-            } else {
-              return 1;
-            }
-          });
-          props.setShoes(copy);
-        }}
-      >
-        가나다순정렬
-      </button>
-      <input
-        className="number"
-        onInput={(e) => {
-          setInputValue(e.target.value);
-        }}
-        placeholder="숫자입력"
-      ></input>
-      {isNaN(inputValue) ? (
-        <div style={{ color: 'red' }}>그러지마셈</div>
+      {count <= 2 && loading == true ? (
+        <div style={{ background: 'green', padding: '20px' }}>로딩중...</div>
       ) : null}
+      {count > 2 ? (
+        <div style={{ padding: '20px' }}>상품이 더이상 존재하지 않습니다.</div>
+      ) : null}
+      <div className="button-area">
+        <button
+          onClick={() => {
+            let copy = [...props.shoes];
+            copy.sort((a, b) => {
+              if (a.title == b.title) {
+                return 0;
+              } else if (a.title < b.title) {
+                return -1;
+              } else {
+                return 1;
+              }
+            });
+            props.setShoes(copy);
+          }}
+        >
+          가나다순정렬
+        </button>
+        <button
+          onClick={() => {
+            setLoading(true);
+            setCount(count + 1);
+
+            //axios
+            //Promise.all([axios.get('url1'),axios.get('url2')])
+            //.then 요청 두개다성공했을때 실행
+            //ajax요청 여러번 하고 싶을때
+          }}
+        >
+          상품 더보기
+        </button>
+        <input
+          className="number"
+          onInput={(e) => {
+            setInputValue(e.target.value);
+          }}
+          placeholder="숫자입력"
+        ></input>
+
+        {isNaN(inputValue) ? (
+          <div style={{ color: 'red' }}>그러지마셈</div>
+        ) : null}
+      </div>
     </>
   );
 }
