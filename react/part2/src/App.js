@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import React from 'react';
 import bg from './bg.png';
 import {
@@ -16,8 +16,13 @@ import data from './data';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import DetailPage from './Pages/Detail';
 import axios from 'axios';
+import { CartPage } from './Pages/Cart';
+
+let Context1 = createContext();
+export { Context1 };
 
 function App() {
+  let [context] = useState([10, 11, 12]);
   let navigate = useNavigate();
   let [shoes, setShoes] = useState(data);
   return (
@@ -57,13 +62,18 @@ function App() {
         ></Route>
         <Route
           path="/detail/:id"
-          element={<DetailPage shoes={shoes}></DetailPage>}
+          element={
+            <Context1.Provider value={{ context }}>
+              <DetailPage shoes={shoes}></DetailPage>
+            </Context1.Provider>
+          }
         ></Route>
         <Route path="/event" element={<EventPage></EventPage>}>
           <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
           <Route path="two" element={<p>생일기념 쿠폰받기</p>}></Route>
         </Route>
         <Route path="*" element={<p>404 : 없는페이지에요</p>}></Route>
+        <Route path="cart" element={<CartPage></CartPage>}></Route>
       </Routes>
     </div>
   );

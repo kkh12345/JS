@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
-
+import { Context1 } from '../App';
 let Discount = styled.div`
   padding: 20px;
   background-color: beige;
@@ -11,24 +11,30 @@ let Discount = styled.div`
 //다른 js파일에선 못씀
 
 function DetailPage(props) {
+  let { context } = useContext(Context1);
   let [display, setDisplay] = useState(true);
   let { id } = useParams();
   let find = props.shoes.find((a) => {
     return a.id == id;
   });
+  let [tap, setTap] = useState(0);
+  let [fade, setFade] = useState('');
 
   useEffect(() => {
     //html렌더링 후 동작
+    let b = setTimeout(() => {
+      setFade('end');
+    }, 100);
     let a = setTimeout(() => {
       setDisplay(false);
     }, 2000);
 
     return () => {
-      clearTimeout(a);
+      setFade('');
     };
   }, []);
   return (
-    <div className="container">
+    <div className={`container start ${fade}`}>
       {display == true ? <Discount>2초이내 구매시 할인</Discount> : null}
       <div className="row">
         <div className="col-md-6">
@@ -44,8 +50,74 @@ function DetailPage(props) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+      <Nav variant="tabs" defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link0"
+            onClick={() => {
+              setTap(0);
+            }}
+          >
+            버튼0
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link1"
+            onClick={() => {
+              setTap(1);
+            }}
+          >
+            버튼1
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link2"
+            onClick={() => {
+              setTap(2);
+            }}
+          >
+            버튼2
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <TapContent shoes={props.shoes} tap={tap}></TapContent>
+      {context[0]}
     </div>
   );
 }
 
+function TapContent({ tap, shoes }) {
+  // if (tap == 0) {
+  //   return <div>내용0</div>;
+  // } else if (tap == 1) {
+  //   return <div>내용1</div>;
+  // } else if (tap == 2) {
+  //   return <div>내용2</div>;
+  // }
+  let { context } = useContext(Context1);
+  let [fade, setFade] = useState('');
+  useEffect(() => {
+    setTimeout(() => {
+      setFade('end');
+    }, 10);
+
+    return () => {
+      setFade('');
+    };
+  }, [tap]);
+  return (
+    <div className={`start ${fade}`}>
+      {
+        [
+          <div>{shoes[0].title}</div>,
+          <div>{shoes[1].title}</div>,
+          <div>{shoes[2].title}</div>,
+        ][tap]
+      }
+      {context[1]}
+    </div>
+  );
+}
 export default DetailPage;
