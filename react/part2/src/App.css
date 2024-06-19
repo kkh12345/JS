@@ -13,10 +13,12 @@ div {
 .home,
 .detail,
 .behind,
-.event {
+.event,
+.cart {
   text-decoration: none;
   color: white;
   margin: 0 10px;
+  cursor: pointer;
 }
 
 .start {
@@ -25,4 +27,7 @@ div {
 .end {
   opacity: 1;
   transition: opacity 0.5s;
+}
+th[colspan] {
+  color: red;
 }

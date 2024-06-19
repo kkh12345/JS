@@ -18,7 +18,7 @@ import DetailPage from './Pages/Detail';
 import axios from 'axios';
 import { CartPage } from './Pages/Cart';
 
-let Context1 = createContext();
+let Context1 = React.createContext();
 export { Context1 };
 
 function App() {
@@ -43,6 +43,14 @@ function App() {
             <Link to="/event" className="event">
               Event
             </Link>
+            <a
+              className="cart"
+              onClick={() => {
+                navigate('/cart');
+              }}
+            >
+              Cart
+            </a>
             <Link
               onClick={() => {
                 navigate(-1);

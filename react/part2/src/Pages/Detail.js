@@ -3,15 +3,17 @@ import { useParams } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Context1 } from '../App';
+import { flushSync } from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, setCount } from '../store';
+
 let Discount = styled.div`
   padding: 20px;
   background-color: beige;
 `;
 
-//다른 js파일에선 못씀
-
 function DetailPage(props) {
-  let { context } = useContext(Context1);
+  let context = useContext(Context1);
   let [display, setDisplay] = useState(true);
   let { id } = useParams();
   let find = props.shoes.find((a) => {
@@ -19,6 +21,8 @@ function DetailPage(props) {
   });
   let [tap, setTap] = useState(0);
   let [fade, setFade] = useState('');
+  let dispatch = useDispatch();
+  let cartItem = useSelector((state) => state.cartItem);
 
   useEffect(() => {
     //html렌더링 후 동작
@@ -47,7 +51,19 @@ function DetailPage(props) {
           <h4 className="pt-5">{find.title}</h4>
           <p>{find.content}</p>
           <p>{find.price}원</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              let add = {
+                id: find.id,
+                name: find.title,
+                count: 1,
+              };
+              dispatch(addItem(add));
+            }}
+          >
+            주문하기
+          </button>
         </div>
       </div>
       <Nav variant="tabs" defaultActiveKey="link0">
@@ -83,7 +99,7 @@ function DetailPage(props) {
         </Nav.Item>
       </Nav>
       <TapContent shoes={props.shoes} tap={tap}></TapContent>
-      {context[0]}
+      {context.context[0]}
     </div>
   );
 }
