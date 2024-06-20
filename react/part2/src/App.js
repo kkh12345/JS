@@ -17,6 +17,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import DetailPage from './Pages/Detail';
 import axios from 'axios';
 import { CartPage } from './Pages/Cart';
+import styled from 'styled-components';
 
 let Context1 = React.createContext();
 export { Context1 };
@@ -25,6 +26,12 @@ function App() {
   let [context] = useState([10, 11, 12]);
   let navigate = useNavigate();
   let [shoes, setShoes] = useState(data);
+
+  useEffect(() => {
+    if (localStorage.getItem('watched') == null) {
+      localStorage.setItem('watched', JSON.stringify([]));
+    }
+  }, []);
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -194,6 +201,8 @@ function MainPage(props) {
           <div style={{ color: 'red' }}>그러지마셈</div>
         ) : null}
       </div>
+
+      <Watched></Watched>
     </>
   );
 }
@@ -213,4 +222,16 @@ function Card(props) {
   );
 }
 
+function Watched() {
+  return (
+    <div className="watched-bg">
+      <div className="watched-nav">cart</div>
+      <div className="watched-main">
+        <p>최근본상품</p>
+        <div className="watched-img">이미지</div>
+      </div>
+      <div className="watched-footer">TOP▲</div>
+    </div>
+  );
+}
 export default App;

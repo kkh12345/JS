@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Context1 } from '../App';
@@ -26,6 +26,12 @@ function DetailPage(props) {
 
   useEffect(() => {
     //html렌더링 후 동작
+    let get = localStorage.getItem('watched');
+    get = JSON.parse(get);
+    get.push(props.shoes[id].id);
+    get = new Set(get);
+    get = [...get];
+    localStorage.setItem('watched', JSON.stringify(get));
     let b = setTimeout(() => {
       setFade('end');
     }, 100);

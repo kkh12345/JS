@@ -31,3 +31,20 @@ div {
 th[colspan] {
   color: red;
 }
+.watched-bg {
+  border: 1px solid gray;
+  width: 200px;
+  max-width: 300px;
+}
+.watched-nav {
+  background-color: black;
+  color: white;
+  padding: 10px 0;
+}
+.watched-main {
+  padding: 10px 0;
+}
+.watched-footer {
+  background-color: #ccc;
+  padding: 10px 0;
+}
