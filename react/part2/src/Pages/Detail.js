@@ -13,7 +13,6 @@ let Discount = styled.div`
 `;
 
 function DetailPage(props) {
-  let context = useContext(Context1);
   let [display, setDisplay] = useState(true);
   let { id } = useParams();
   let find = props.shoes.find((a) => {
@@ -25,13 +24,20 @@ function DetailPage(props) {
   let cartItem = useSelector((state) => state.cartItem);
 
   useEffect(() => {
-    //html렌더링 후 동작
     let get = localStorage.getItem('watched');
+    let includes = false;
     get = JSON.parse(get);
-    get.push(props.shoes[id].id);
-    get = new Set(get);
-    get = [...get];
+    get.forEach((a, i) => {
+      if (a.id == props.shoes[id].id) {
+        includes = true;
+        return;
+      }
+    });
+    includes == false
+      ? get.push({ id: props.shoes[id].id, title: props.shoes[id].title })
+      : console.log(1);
     localStorage.setItem('watched', JSON.stringify(get));
+
     let b = setTimeout(() => {
       setFade('end');
     }, 100);
@@ -105,7 +111,6 @@ function DetailPage(props) {
         </Nav.Item>
       </Nav>
       <TapContent shoes={props.shoes} tap={tap}></TapContent>
-      {context.context[0]}
     </div>
   );
 }
@@ -118,7 +123,7 @@ function TapContent({ tap, shoes }) {
   // } else if (tap == 2) {
   //   return <div>내용2</div>;
   // }
-  let { context } = useContext(Context1);
+
   let [fade, setFade] = useState('');
   useEffect(() => {
     setTimeout(() => {
@@ -138,7 +143,6 @@ function TapContent({ tap, shoes }) {
           <div>{shoes[2].title}</div>,
         ][tap]
       }
-      {context[1]}
     </div>
   );
 }

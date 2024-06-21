@@ -18,6 +18,7 @@ import DetailPage from './Pages/Detail';
 import axios from 'axios';
 import { CartPage } from './Pages/Cart';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 
 let Context1 = React.createContext();
 export { Context1 };
@@ -27,11 +28,25 @@ function App() {
   let navigate = useNavigate();
   let [shoes, setShoes] = useState(data);
 
+  let result = useQuery(
+    ['작명'],
+    () => {
+      return axios
+        .get('https://codingapple1.github.io/userdata.json')
+        .then((a) => {
+          console.log('요청됨');
+          return a.data;
+        });
+    },
+    { staleTime: 1000 }
+  );
+
   useEffect(() => {
     if (localStorage.getItem('watched') == null) {
       localStorage.setItem('watched', JSON.stringify([]));
     }
   }, []);
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -66,6 +81,11 @@ function App() {
             >
               뒤로가기
             </Link>
+          </Nav>
+          <Nav className="ms-auto">
+            {result.isLoading && '로딩중'}
+            {result.error && '로딩중'}
+            {result.data && result.data.name}
           </Nav>
         </Container>
       </Navbar>
@@ -202,7 +222,7 @@ function MainPage(props) {
         ) : null}
       </div>
 
-      <Watched></Watched>
+      <Watched shoes={props.shoes}></Watched>
     </>
   );
 }
@@ -222,15 +242,47 @@ function Card(props) {
   );
 }
 
-function Watched() {
+let Reset = styled.button`
+  display: inline-block;
+  border: none;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: lightpink;
+  padding: 5px 10px;
+`;
+
+function Watched({ shoes }) {
+  let [item, setItem] = useState(JSON.parse(localStorage.getItem('watched')));
+
   return (
     <div className="watched-bg">
-      <div className="watched-nav">cart</div>
+      <div className="watched-nav">최근 본 상품</div>
       <div className="watched-main">
-        <p>최근본상품</p>
-        <div className="watched-img">이미지</div>
+        <div className="watched-item">
+          {item.map((a, i) => {
+            return (
+              <div key={i}>
+                <img
+                  src={`https://codingapple1.github.io/shop/shoes${
+                    a.id + 1
+                  }.jpg`}
+                  width={'200px'}
+                ></img>
+                <p>{a.title}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className="watched-footer">TOP▲</div>
+      <Reset
+        onClick={() => {
+          setItem([]);
+          localStorage.setItem('watched', JSON.stringify([]));
+        }}
+      >
+        초기화
+      </Reset>
+      {/* <div className="watched-footer">TOP▲</div> */}
     </div>
   );
 }
