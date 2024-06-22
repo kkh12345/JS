@@ -1,11 +1,26 @@
 import { Table } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCount, deleteItem } from '../store';
+import { useState, memo, useMemo } from 'react';
+
+let Child = memo(function (props) {
+  console.log('리렌더링');
+  return <div>자식임</div>;
+});
 
 function CartPage() {
   let a = useSelector((state) => state.user);
   let cartItem = useSelector((state) => state.cartItem);
   let dispatch = useDispatch();
+
+  let [count, setCount] = useState(0);
+
+  let result = useMemo(() => {
+    console.log(0);
+    for (let i = 0; (i = 10); i++) {
+      return i;
+    }
+  }, []);
 
   return (
     <div>
@@ -19,6 +34,14 @@ function CartPage() {
       >
         나이
       </button> */}
+      <Child count={count}></Child>
+      <button
+        onClick={() => {
+          setCount(count++);
+        }}
+      >
+        +
+      </button>
       <Table>
         <thead>
           <tr>
@@ -61,4 +84,4 @@ function CartPage() {
     </div>
   );
 }
-export { CartPage };
+export default CartPage;

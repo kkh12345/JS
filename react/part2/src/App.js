@@ -1,6 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import { createContext, useEffect, useState } from 'react';
+import {
+  Suspense,
+  createContext,
+  lazy,
+  useEffect,
+  useState,
+  useTransition,
+  useDeferredValue,
+} from 'react';
 import React from 'react';
 import bg from './bg.png';
 import {
@@ -14,19 +22,29 @@ import {
 } from 'react-bootstrap';
 import data from './data';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import DetailPage from './Pages/Detail';
+// import DetailPage from './Pages/Detail';
 import axios from 'axios';
-import { CartPage } from './Pages/Cart';
+// import  CartPage from './Pages/Cart';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import { setCount } from './store';
 
+const DetailPage = lazy(() => import('./Pages/Detail'));
+const CartPage = lazy(() => import('./Pages/Cart'));
 let Context1 = React.createContext();
 export { Context1 };
+let a = new Array(10000).fill(0);
 
 function App() {
+  let [click, setClick] = useState(0);
+  let [age, setAge] = useState(20);
+  let [name, setName] = useState('');
+  let [isPending, startTransition] = useTransition();
   let [context] = useState([10, 11, 12]);
   let navigate = useNavigate();
   let [shoes, setShoes] = useState(data);
+  let state1 = useDeferredValue(name);
+  // console.log(state1);
 
   let result = useQuery(
     ['작명'],
@@ -40,6 +58,12 @@ function App() {
     },
     { staleTime: 1000 }
   );
+
+  useEffect(() => {
+    if (click != 0 && click < 3) {
+      setAge(age + 1);
+    }
+  }, [click]);
 
   useEffect(() => {
     if (localStorage.getItem('watched') == null) {
@@ -98,9 +122,11 @@ function App() {
         <Route
           path="/detail/:id"
           element={
-            <Context1.Provider value={{ context }}>
-              <DetailPage shoes={shoes}></DetailPage>
-            </Context1.Provider>
+            <Suspense fallback={<div>로딩중</div>}>
+              <Context1.Provider value={{ context }}>
+                <DetailPage shoes={shoes}></DetailPage>
+              </Context1.Provider>
+            </Suspense>
           }
         ></Route>
         <Route path="/event" element={<EventPage></EventPage>}>
@@ -108,8 +134,40 @@ function App() {
           <Route path="two" element={<p>생일기념 쿠폰받기</p>}></Route>
         </Route>
         <Route path="*" element={<p>404 : 없는페이지에요</p>}></Route>
-        <Route path="cart" element={<CartPage></CartPage>}></Route>
+        <Route
+          path="cart"
+          element={
+            <Suspense fallback={<div>로딩중</div>}>
+              <CartPage></CartPage>
+            </Suspense>
+          }
+        ></Route>
       </Routes>
+      {/* <div>
+        <input
+          onChange={(e) => {
+            startTransition(() => {
+              console.log(1);
+              setName(e.target.value);
+            });
+          }}
+        ></input>
+        {isPending
+          ? '로딩중'
+          : a.map((a, i) => {
+              return <div key={i}>{state1}</div>;
+            })}
+      </div> */}
+      <div>
+        <div>안녕하십니까 전{age}</div>
+        <button
+          onClick={() => {
+            setClick(click + 1);
+          }}
+        >
+          누르면한살먹기
+        </button>
+      </div>
     </div>
   );
 }
