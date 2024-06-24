@@ -1,0 +1,69 @@
+div {
+  margin: 0;
+}
+nav {
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+  background-color: palegoldenrod;
+}
+nav h3 {
+  margin: 0;
+}
+nav a {
+  text-decoration: none;
+  color: black;
+}
+.main-img {
+  background-image: url('https://codingapple.com/wp-content/uploads/2022/04/bg.png');
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+.products-area {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 20px;
+}
+.card {
+  width: 250px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.card:hover {
+  transform: scale(1.1);
+}
+.detail {
+  display: flex;
+  border-bottom: 1px solid gray;
+}
+.detail img {
+  width: 500px;
+}
+.detail-content {
+  flex-grow: 1;
+  padding: 50px;
+}
+.cart-btn {
+  padding: 5px 10px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.event {
+  width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.event ul {
+  padding: 0;
+  list-style: none;
+}
+.event li {
+  color: red;
+  text-decoration: underline;
+  margin: 10px 0;
+  cursor: pointer;
+}
