@@ -1,14 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useReducer, useRef } from 'react';
+import { useState, useReducer, useRef, useEffect, createContext } from 'react';
 import data from './data';
 import { Route, Routes, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './components/detail';
+import { getValue } from '@testing-library/user-event/dist/utils';
+import axios from 'axios';
+import React from 'react';
+export let Context1 = React.createContext();
 
 function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
   let display = useRef();
+  let [warn, setWarn] = useState(false);
+  let [재고, 재고변경] = useState([10, 11, 12]);
 
   return (
     <div className="App">
@@ -45,7 +51,11 @@ function App() {
         ></Route>
         <Route
           path="/detail/:id"
-          element={<Detail shoes={shoes}></Detail>}
+          element={
+            <Context1.Provider value={{ 재고, shoes }}>
+              <Detail shoes={shoes}></Detail>
+            </Context1.Provider>
+          }
         ></Route>
         <Route
           path="/event"
@@ -70,6 +80,19 @@ function App() {
                 >
                   이벤트2
                 </li>
+                <li>
+                  <input
+                    onChange={(e) => {
+                      if (isNaN(e.target.value)) {
+                        setWarn(true);
+                      } else {
+                        setWarn(false);
+                      }
+                    }}
+                    placeholder="숫자만 입력하세요"
+                  ></input>
+                </li>
+                {warn && <p style={{ color: 'blue' }}>숫자만 입력하라고!</p>}
                 <Outlet></Outlet>
               </ul>
             </div>
@@ -88,6 +111,15 @@ function Main({ shoes, setShoes }) {
   return (
     <main>
       <div className="main-img"></div>
+
+      <div className="products-area">
+        {shoes.length > shoes.length - 1
+          ? shoes.map((a, i) => {
+              console.log(a);
+              return <Card key={i} a={a} i={i}></Card>;
+            })
+          : null}
+      </div>
       <div style={{ textAlign: 'center' }}>
         <button
           onClick={() => {
@@ -106,11 +138,25 @@ function Main({ shoes, setShoes }) {
         >
           가나다순정렬
         </button>
-      </div>
-      <div className="products-area">
-        {shoes.map((a, i) => {
-          return <Card key={i} a={a} i={i}></Card>;
-        })}
+        <button
+          onClick={() => {
+            fetch(`https://codingapple1.github.io/shop/data2.json`)
+              .then((result) => {
+                return result.json();
+              })
+              .then((a) => {
+                let copy = [];
+                copy = [...shoes, ...a];
+
+                setShoes(copy);
+              })
+              .catch((error) => {
+                console.log('에러');
+              });
+          }}
+        >
+          상품 더보기
+        </button>
       </div>
     </main>
   );
@@ -121,9 +167,9 @@ function Card({ a, i }) {
   return (
     <div
       className="card"
-      // onClick={() => {
-      //   navigate(`/detail/${a.id}`);
-      // }}
+      onClick={() => {
+        navigate(`/detail/${a.id}`);
+      }}
     >
       <img
         width={'100%'}

@@ -22,12 +22,13 @@ nav a {
 }
 .products-area {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 20px;
   padding: 20px;
 }
 .card {
-  width: 250px;
+  width: 24%;
   cursor: pointer;
   transition: all 0.5s;
 }
@@ -45,13 +46,7 @@ nav a {
   flex-grow: 1;
   padding: 50px;
 }
-.cart-btn {
-  padding: 5px 10px;
-  background-color: darkred;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
+
 .event {
   width: 600px;
   margin: 0 auto;
@@ -66,4 +61,11 @@ nav a {
   text-decoration: underline;
   margin: 10px 0;
   cursor: pointer;
+}
+.start {
+  opacity: 0;
+}
+.end {
+  opacity: 1;
+  transition: all 0.5s;
 }
