@@ -7,6 +7,7 @@ import Detail from './components/detail';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
 import React from 'react';
+import Cart from './components/cart';
 export let Context1 = React.createContext();
 
 function App() {
@@ -20,13 +21,7 @@ function App() {
     <div className="App">
       <nav>
         <h3>SHOP</h3>
-        <a
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          HOME
-        </a>
+        <Link to={'/'}>HOME</Link>
 
         <a
           onClick={() => {
@@ -35,13 +30,8 @@ function App() {
         >
           뒤로가기
         </a>
-        <a
-          onClick={() => {
-            navigate('/event');
-          }}
-        >
-          Event
-        </a>
+        <Link to={'/event'}>Event</Link>
+        <Link to={'/cart'}>장바구니</Link>
       </nav>
 
       <Routes>
@@ -57,6 +47,7 @@ function App() {
             </Context1.Provider>
           }
         ></Route>
+        <Route path="/cart" element={<Cart />}></Route>
         <Route
           path="/event"
           element={
@@ -115,7 +106,6 @@ function Main({ shoes, setShoes }) {
       <div className="products-area">
         {shoes.length > shoes.length - 1
           ? shoes.map((a, i) => {
-              console.log(a);
               return <Card key={i} a={a} i={i}></Card>;
             })
           : null}

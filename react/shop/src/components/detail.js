@@ -1,8 +1,16 @@
 import { hover } from '@testing-library/user-event/dist/hover';
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {
+  Routes,
+  Router,
+  useParams,
+  Route,
+  useNavigate,
+} from 'react-router-dom';
 import styled from 'styled-components';
 import { Context1 } from '../App';
+import { useDispatch } from 'react-redux';
+import { addProducts } from '../store';
 
 const CartBtn = styled.button`
   padding: 5px 10px;
@@ -55,6 +63,8 @@ function Detail({ shoes }) {
   let [show, setShow] = useState(true);
   let [click, setClick] = useState(0);
   let { 재고 } = useContext(Context1);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let a = setTimeout(() => {
@@ -82,7 +92,15 @@ function Detail({ shoes }) {
           <h2>{find.title}</h2>
           <p>{find.content}</p>
           <p>가격 : {find.price} </p>
-          <CartBtn bg={'darkred'}>장바구니에 넣기</CartBtn>
+
+          <CartBtn
+            bg={'darkred'}
+            onClick={() => {
+              dispatch(addProducts(find));
+            }}
+          >
+            장바구니에 넣기
+          </CartBtn>
         </div>
       </div>
       <Tap click={click} setClick={setClick}></Tap>
